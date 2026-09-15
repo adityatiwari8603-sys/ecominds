@@ -1,0 +1,35 @@
+# Virtual environment
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Environment variables / secrets
+.env
+.env.*
+
+# SQLite databases
+*.db
+*.db-journal
+
+# VS Code
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Old/backup development files
+static/index old.html.html
+static/index_backup.html
+static/index_current_broken.html
+qa_backup_before_retrieval_fix.py
+notepad check_de.py
+
+# Duplicate seed files accidentally kept in static folder
+static/seed_dsa_master.py
+static/seed_dsa_two_pointers.py
+static/seed_full_junior_knowledge.py
+static/seed_knowledge.py
+static/seed_python.py

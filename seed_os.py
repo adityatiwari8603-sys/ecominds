@@ -1,0 +1,973 @@
+import sqlite3
+
+DATABASE_NAME = "ecomind.db"
+
+os_knowledge = [
+
+    # ============================================================
+    # UNIT I — INTRODUCTION, PROCESSES AND CPU SCHEDULING
+    # ============================================================
+
+    {
+        "title": "Operating System",
+        "content": "An operating system is system software that manages computer hardware and provides services and an execution environment for application programs. It manages resources such as the processor, memory, storage and input/output devices.",
+        "unit": "Unit I",
+        "topic": "Operating System Basics",
+        "category": "Concept Explanation",
+        "difficulty": "Easy",
+        "keywords": "operating system, OS, system software, resources",
+    },
+    {
+        "title": "Operating System Functions",
+        "content": "Major operating system functions include process management, memory management, file management, device management, storage management, protection and providing interfaces through which users and programs interact with the computer.",
+        "unit": "Unit I",
+        "topic": "Operating System Functions",
+        "category": "Concept Explanation",
+        "difficulty": "Easy",
+        "keywords": "OS functions, process management, memory management, file management",
+    },
+    {
+        "title": "Operating System Objectives",
+        "content": "Important objectives of an operating system include making the computer system convenient to use, managing hardware resources efficiently and providing a controlled environment for program execution.",
+        "unit": "Unit I",
+        "topic": "Operating System Objectives",
+        "category": "Concept Explanation",
+        "difficulty": "Easy",
+        "keywords": "OS objectives, efficiency, convenience, resource management",
+    },
+    {
+        "title": "Generations of Operating Systems",
+        "content": "Operating systems evolved from early systems with limited automation toward batch systems, multiprogramming systems, time-sharing systems and modern systems supporting networking, distributed computing, graphical interfaces and multiple computing environments.",
+        "unit": "Unit I",
+        "topic": "OS Generations",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "OS generations, batch, multiprogramming, time sharing",
+    },
+    {
+        "title": "Types of Operating Systems",
+        "content": "Operating systems can be classified according to their design and use, including batch systems, multiprogramming systems, time-sharing systems, real-time systems, distributed systems and other specialized operating environments.",
+        "unit": "Unit I",
+        "topic": "OS Types",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "OS types, batch, real time, distributed, time sharing",
+    },
+
+    {
+        "title": "Process in Operating System",
+        "content": "A process is a program in execution. It includes the executing program and the associated execution state and resources needed for the program to run.",
+        "unit": "Unit I",
+        "topic": "Processes",
+        "category": "Concept Explanation",
+        "difficulty": "Easy",
+        "keywords": "process, program, execution, OS",
+    },
+    {
+        "title": "Process Relationships",
+        "content": "Processes may have relationships with other processes. A process can create or interact with other processes, forming relationships that are relevant to process management and inter-process communication.",
+        "unit": "Unit I",
+        "topic": "Processes",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "process relationship, parent process, child process",
+    },
+    {
+        "title": "Process States",
+        "content": "A process changes state during its lifetime. Common process states include new, ready, running, waiting or blocked, and terminated. The exact state model depends on the operating system design.",
+        "unit": "Unit I",
+        "topic": "Process States",
+        "category": "Concept Explanation",
+        "difficulty": "Easy",
+        "keywords": "process states, new, ready, running, waiting, terminated",
+    },
+    {
+        "title": "Process State Transitions",
+        "content": "Process state transitions occur when events change the execution condition of a process. For example, a ready process can become running when selected by the scheduler, and a running process can become waiting when it requires an event or resource.",
+        "unit": "Unit I",
+        "topic": "Process State Transitions",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "state transition, ready, running, waiting",
+    },
+    {
+        "title": "Process Control Block",
+        "content": "A Process Control Block (PCB) is an operating system data structure containing information required to manage a process. It can contain process identification, process state, scheduling information and information needed to resume execution.",
+        "unit": "Unit I",
+        "topic": "PCB",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "PCB, process control block, process state",
+    },
+    {
+        "title": "Lightweight Process",
+        "content": "A lightweight process generally represents a smaller execution unit compared with a traditional heavyweight process. Threads are commonly associated with lightweight execution within a process.",
+        "unit": "Unit I",
+        "topic": "Lightweight Processes",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "lightweight process, thread, process",
+    },
+    {
+        "title": "Heavyweight Process",
+        "content": "A heavyweight process has its own process context and resources managed by the operating system. Compared with lightweight execution units, heavyweight processes generally involve more management overhead.",
+        "unit": "Unit I",
+        "topic": "Heavyweight Processes",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "heavyweight process, process, overhead",
+    },
+
+    {
+        "title": "Process Scheduler",
+        "content": "A process scheduler selects processes for execution according to the scheduling policy of the operating system. Scheduling determines which ready process receives processor time.",
+        "unit": "Unit I",
+        "topic": "Process Scheduling",
+        "category": "Concept Explanation",
+        "difficulty": "Easy",
+        "keywords": "scheduler, process scheduling, CPU",
+    },
+    {
+        "title": "Long Term Scheduler",
+        "content": "The long-term scheduler controls the admission of processes into the system for execution. It influences the degree of multiprogramming by deciding which processes are admitted.",
+        "unit": "Unit I",
+        "topic": "Schedulers",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "long term scheduler, job scheduler",
+    },
+    {
+        "title": "Short Term Scheduler",
+        "content": "The short-term scheduler selects one of the ready processes for execution on the CPU. It operates frequently and therefore needs to make scheduling decisions efficiently.",
+        "unit": "Unit I",
+        "topic": "Schedulers",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "short term scheduler, CPU scheduler",
+    },
+    {
+        "title": "Dispatcher",
+        "content": "The dispatcher gives control of the CPU to the process selected by the short-term scheduler. Dispatcher activities include transferring control to the selected process and performing the required context switch.",
+        "unit": "Unit I",
+        "topic": "Dispatcher",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "dispatcher, CPU, context switch",
+    },
+    {
+        "title": "Context Switching",
+        "content": "Context switching is the process of saving the execution state of one process and restoring the saved state of another process so that CPU execution can move between processes.",
+        "unit": "Unit I",
+        "topic": "Context Switching",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "context switch, process, CPU",
+    },
+
+    {
+        "title": "CPU Utilization",
+        "content": "CPU utilization is a scheduling performance criterion that represents how effectively the processor is kept busy. Scheduling policies generally aim to maintain high useful CPU utilization.",
+        "unit": "Unit I",
+        "topic": "Scheduling Criteria",
+        "category": "Concept Explanation",
+        "difficulty": "Easy",
+        "keywords": "CPU utilization, scheduling criteria",
+    },
+    {
+        "title": "CPU Throughput",
+        "content": "Throughput represents the amount of work completed by the system during a given period. In process scheduling, it is commonly related to the number of processes completed over time.",
+        "unit": "Unit I",
+        "topic": "Scheduling Criteria",
+        "category": "Concept Explanation",
+        "difficulty": "Easy",
+        "keywords": "throughput, scheduling, performance",
+    },
+    {
+        "title": "Turnaround Time",
+        "content": "Turnaround time is the total time taken by a process from its arrival or submission until its completion. In scheduling numericals, turnaround time is calculated from completion time and arrival time.",
+        "unit": "Unit I",
+        "topic": "Scheduling Criteria",
+        "category": "Concept Explanation",
+        "difficulty": "Easy",
+        "keywords": "turnaround time, completion time, arrival time",
+    },
+    {
+        "title": "Waiting Time",
+        "content": "Waiting time represents the amount of time a process spends waiting in the ready queue for CPU service. It is an important process scheduling performance measure.",
+        "unit": "Unit I",
+        "topic": "Scheduling Criteria",
+        "category": "Concept Explanation",
+        "difficulty": "Easy",
+        "keywords": "waiting time, ready queue, scheduling",
+    },
+    {
+        "title": "Response Time",
+        "content": "Response time is the time between a process request or arrival and the point at which the system first provides a response or begins serving the process.",
+        "unit": "Unit I",
+        "topic": "Scheduling Criteria",
+        "category": "Concept Explanation",
+        "difficulty": "Easy",
+        "keywords": "response time, scheduling",
+    },
+
+    {
+        "title": "FCFS Scheduling",
+        "content": "First-Come, First-Served (FCFS) scheduling selects processes according to their arrival order. The process that enters the ready queue first is served first. FCFS is normally non-preemptive.",
+        "unit": "Unit I",
+        "topic": "FCFS Scheduling",
+        "category": "Concept Explanation",
+        "difficulty": "Easy",
+        "keywords": "FCFS, first come first served, scheduling",
+    },
+    {
+        "title": "FCFS Scheduling Common Mistake",
+        "content": "A common mistake in FCFS numericals is confusing Completion Time with Turnaround Time. Completion Time is the time at which execution finishes, while Turnaround Time includes the time from arrival until completion.",
+        "unit": "Unit I",
+        "topic": "FCFS Scheduling",
+        "category": "Common Mistake",
+        "difficulty": "Easy",
+        "keywords": "FCFS, CT, TAT, scheduling mistake",
+    },
+
+    {
+        "title": "SJF Scheduling",
+        "content": "Shortest Job First (SJF) selects the available process with the shortest burst time. In the non-preemptive form, once a process begins execution, it continues until completion.",
+        "unit": "Unit I",
+        "topic": "SJF Scheduling",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "SJF, shortest job first, burst time",
+    },
+    {
+        "title": "SJF Scheduling Common Mistake",
+        "content": "When arrival times are given, SJF should select the shortest burst among processes that have already arrived. Choosing the globally shortest burst without checking the ready queue can produce an incorrect schedule.",
+        "unit": "Unit I",
+        "topic": "SJF Scheduling",
+        "category": "Common Mistake",
+        "difficulty": "Medium",
+        "keywords": "SJF, arrival time, ready queue, mistake",
+    },
+
+    {
+        "title": "SRTF Scheduling",
+        "content": "Shortest Remaining Time First (SRTF) is the preemptive form of shortest-job scheduling. The process with the shortest remaining CPU burst among available processes receives CPU service, and a running process may be preempted.",
+        "unit": "Unit I",
+        "topic": "SRTF Scheduling",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "SRTF, shortest remaining time, preemptive scheduling",
+    },
+    {
+        "title": "SRTF Scheduling Common Mistake",
+        "content": "In SRTF, the scheduler must consider the remaining burst time rather than the original burst time. New arrivals can cause the currently running process to be preempted.",
+        "unit": "Unit I",
+        "topic": "SRTF Scheduling",
+        "category": "Common Mistake",
+        "difficulty": "Medium",
+        "keywords": "SRTF, remaining time, preemption",
+    },
+
+    {
+        "title": "Round Robin Scheduling",
+        "content": "Round Robin scheduling gives each ready process a fixed time quantum in cyclic order. If a process does not finish within its quantum, it can be placed back into the ready queue according to the scheduling policy.",
+        "unit": "Unit I",
+        "topic": "Round Robin Scheduling",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "Round Robin, RR, time quantum",
+    },
+    {
+        "title": "Round Robin Time Quantum",
+        "content": "The time quantum determines how long a process can execute during one turn in Round Robin scheduling. A smaller quantum generally creates more frequent context switching, while a larger quantum changes the behavior toward longer CPU runs.",
+        "unit": "Unit I",
+        "topic": "Round Robin Scheduling",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "Round Robin, time quantum, context switching",
+    },
+
+    # ============================================================
+    # UNIT II — IPC, SYNCHRONIZATION AND DEADLOCKS
+    # ============================================================
+
+    {
+        "title": "Inter Process Communication",
+        "content": "Inter-Process Communication (IPC) provides mechanisms through which processes can exchange information and coordinate their activities. Synchronization is important when processes share data or resources.",
+        "unit": "Unit II",
+        "topic": "Inter Process Communication",
+        "category": "Concept Explanation",
+        "difficulty": "Easy",
+        "keywords": "IPC, inter process communication, processes",
+    },
+    {
+        "title": "Critical Section",
+        "content": "A critical section is the part of a process where shared data or a shared resource is accessed or modified. Proper synchronization is required so that concurrent processes do not incorrectly interfere with each other.",
+        "unit": "Unit II",
+        "topic": "Critical Section",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "critical section, synchronization, shared resource",
+    },
+    {
+        "title": "Race Condition",
+        "content": "A race condition occurs when the result of concurrent execution depends on the timing or ordering of processes accessing shared data. Synchronization mechanisms are used to prevent incorrect results.",
+        "unit": "Unit II",
+        "topic": "Race Conditions",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "race condition, concurrency, shared data",
+    },
+    {
+        "title": "Mutual Exclusion",
+        "content": "Mutual exclusion ensures that only the permitted process or thread enters a critical section at a time when exclusive access to a shared resource is required.",
+        "unit": "Unit II",
+        "topic": "Mutual Exclusion",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "mutual exclusion, critical section, synchronization",
+    },
+    {
+        "title": "Binary Semaphore",
+        "content": "A binary semaphore is a synchronization mechanism whose value is restricted to two logical states. It can be used to coordinate access to shared resources and support mutual exclusion.",
+        "unit": "Unit II",
+        "topic": "Semaphores",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "binary semaphore, synchronization, mutual exclusion",
+    },
+    {
+        "title": "Counting Semaphore",
+        "content": "A counting semaphore can represent multiple available instances of a resource. Processes use semaphore operations to coordinate access according to the current count.",
+        "unit": "Unit II",
+        "topic": "Semaphores",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "counting semaphore, resources, synchronization",
+    },
+    {
+        "title": "Busy Waiting",
+        "content": "Busy waiting occurs when a process repeatedly checks a condition while waiting instead of giving up the CPU during the wait. It can consume processor time unnecessarily.",
+        "unit": "Unit II",
+        "topic": "Synchronization",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "busy waiting, synchronization, CPU",
+    },
+    {
+        "title": "Semaphore Wait Operation",
+        "content": "The wait operation on a semaphore is used to request access according to the semaphore's synchronization rules. If the required condition is not satisfied, the requesting process may have to wait.",
+        "unit": "Unit II",
+        "topic": "Semaphore Operations",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "wait, semaphore, synchronization",
+    },
+    {
+        "title": "Semaphore Signal Operation",
+        "content": "The signal operation updates a semaphore to indicate that a resource or synchronization condition has been released or made available. Waiting processes may then be allowed to proceed according to the semaphore mechanism.",
+        "unit": "Unit II",
+        "topic": "Semaphore Operations",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "signal, semaphore, synchronization",
+    },
+
+    {
+        "title": "Reader Writer Problem",
+        "content": "The Reader-Writer problem is a classical synchronization problem involving shared data. Multiple readers may need to access shared information while writers require appropriate exclusive access to maintain consistency.",
+        "unit": "Unit II",
+        "topic": "Reader Writer Problem",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "reader writer, synchronization, IPC",
+    },
+    {
+        "title": "Producer Consumer Problem",
+        "content": "The Producer-Consumer problem involves producers generating data and consumers using that data through a shared buffer. Synchronization is required to coordinate access and prevent invalid buffer operations.",
+        "unit": "Unit II",
+        "topic": "Producer Consumer",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "producer consumer, buffer, semaphore, IPC",
+    },
+    {
+        "title": "Dining Philosophers Problem",
+        "content": "The Dining Philosophers problem is a classical synchronization problem used to illustrate issues involving competing processes, shared resources and possible deadlock or starvation.",
+        "unit": "Unit II",
+        "topic": "Dining Philosophers",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "dining philosophers, deadlock, synchronization",
+    },
+
+    {
+        "title": "Deadlock",
+        "content": "A deadlock is a state in which a group of processes remains permanently blocked because each process is waiting for a resource or event that cannot become available under the current allocation.",
+        "unit": "Unit II",
+        "topic": "Deadlocks",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "deadlock, blocked processes, resources",
+    },
+    {
+        "title": "Deadlock Necessary Conditions",
+        "content": "The classical necessary conditions for deadlock are mutual exclusion, hold and wait, no preemption and circular wait. Deadlock requires the relevant conditions to occur together.",
+        "unit": "Unit II",
+        "topic": "Deadlocks",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "deadlock conditions, mutual exclusion, hold wait, circular wait",
+    },
+    {
+        "title": "Deadlock Prevention",
+        "content": "Deadlock prevention designs resource allocation rules so that at least one necessary condition for deadlock cannot hold. The goal is to prevent the system from entering a deadlocked state.",
+        "unit": "Unit II",
+        "topic": "Deadlock Prevention",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "deadlock prevention, resource allocation",
+    },
+    {
+        "title": "Bankers Algorithm",
+        "content": "Banker's Algorithm is a deadlock avoidance method. It examines resource demands and available resources to determine whether granting a request keeps the system in a safe state.",
+        "unit": "Unit II",
+        "topic": "Bankers Algorithm",
+        "category": "Concept Explanation",
+        "difficulty": "Hard",
+        "keywords": "Banker's algorithm, deadlock avoidance, safe state",
+    },
+    {
+        "title": "Safe State in Deadlock Avoidance",
+        "content": "A safe state is a state in which the operating system can find an ordering of processes such that each process can obtain its required resources and eventually complete without causing deadlock.",
+        "unit": "Unit II",
+        "topic": "Bankers Algorithm",
+        "category": "Concept Explanation",
+        "difficulty": "Hard",
+        "keywords": "safe state, Banker algorithm, deadlock",
+    },
+    {
+        "title": "Deadlock Detection",
+        "content": "Deadlock detection attempts to determine whether a deadlock has already occurred by analyzing the current allocation and waiting relationships among processes and resources.",
+        "unit": "Unit II",
+        "topic": "Deadlock Detection",
+        "category": "Concept Explanation",
+        "difficulty": "Hard",
+        "keywords": "deadlock detection, resource allocation",
+    },
+    {
+        "title": "Deadlock Recovery",
+        "content": "Deadlock recovery attempts to restore the system after a deadlock has been detected. Possible approaches include terminating selected processes or taking appropriate resources back according to the system policy.",
+        "unit": "Unit II",
+        "topic": "Deadlock Recovery",
+        "category": "Concept Explanation",
+        "difficulty": "Hard",
+        "keywords": "deadlock recovery, process termination, resources",
+    },
+
+    # ============================================================
+    # UNIT III — MEMORY MANAGEMENT
+    # ============================================================
+
+    {
+        "title": "Memory Management",
+        "content": "Memory management is the operating system function responsible for managing the allocation and use of main memory by processes. It keeps track of memory use and supports safe and efficient process execution.",
+        "unit": "Unit III",
+        "topic": "Memory Management",
+        "category": "Concept Explanation",
+        "difficulty": "Easy",
+        "keywords": "memory management, main memory, OS",
+    },
+    {
+        "title": "Logical Address",
+        "content": "A logical address is an address generated from the viewpoint of a running program. It is translated or mapped to a physical memory location before the required data is accessed in main memory.",
+        "unit": "Unit III",
+        "topic": "Address Mapping",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "logical address, address mapping, memory",
+    },
+    {
+        "title": "Physical Address",
+        "content": "A physical address identifies a location in the actual main memory hardware. The operating system and memory-management hardware provide the mechanisms required to map logical addresses to physical addresses.",
+        "unit": "Unit III",
+        "topic": "Address Mapping",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "physical address, main memory, address mapping",
+    },
+    {
+        "title": "Logical to Physical Address Mapping",
+        "content": "Address mapping converts the address generated by a program into an address corresponding to physical memory. The exact mechanism depends on the memory-management technique being used.",
+        "unit": "Unit III",
+        "topic": "Address Mapping",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "logical physical address, mapping, memory",
+    },
+
+    {
+        "title": "Contiguous Memory Allocation",
+        "content": "Contiguous allocation assigns each process a continuous region of physical memory. It can be implemented using fixed or variable partition approaches.",
+        "unit": "Unit III",
+        "topic": "Contiguous Allocation",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "contiguous allocation, memory partition, OS",
+    },
+    {
+        "title": "Fixed Partitioning",
+        "content": "Fixed partitioning divides memory into fixed-size partitions. A process is placed into an available partition large enough for it according to the allocation policy.",
+        "unit": "Unit III",
+        "topic": "Fixed Partitioning",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "fixed partition, memory allocation",
+    },
+    {
+        "title": "Variable Partitioning",
+        "content": "Variable partitioning creates memory partitions according to the size requirements of processes. Partition sizes therefore vary as processes are allocated memory.",
+        "unit": "Unit III",
+        "topic": "Variable Partitioning",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "variable partition, dynamic allocation, memory",
+    },
+    {
+        "title": "Internal Fragmentation",
+        "content": "Internal fragmentation occurs when allocated memory contains unused space inside an allocated region. The unused space cannot be conveniently assigned to another process because it lies within an already allocated partition.",
+        "unit": "Unit III",
+        "topic": "Fragmentation",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "internal fragmentation, memory allocation",
+    },
+    {
+        "title": "External Fragmentation",
+        "content": "External fragmentation occurs when free memory exists in separated regions between allocated blocks, making it difficult to satisfy a request requiring a sufficiently large contiguous region.",
+        "unit": "Unit III",
+        "topic": "Fragmentation",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "external fragmentation, memory allocation",
+    },
+    {
+        "title": "Memory Compaction",
+        "content": "Compaction attempts to combine scattered free memory regions into a larger contiguous free region. It is used as a response to external fragmentation in systems that support relocation.",
+        "unit": "Unit III",
+        "topic": "Compaction",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "compaction, external fragmentation, memory",
+    },
+
+    {
+        "title": "Paging",
+        "content": "Paging divides logical memory into fixed-size pages and physical memory into fixed-size frames. Pages can be placed into available frames, allowing a process's physical memory allocation to be non-contiguous.",
+        "unit": "Unit III",
+        "topic": "Paging",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "paging, pages, frames, memory",
+    },
+    {
+        "title": "Paging Operation",
+        "content": "During paging, a logical address is divided into components used to identify a page and an offset within that page. The page mapping determines the corresponding physical frame and the offset identifies the location within that frame.",
+        "unit": "Unit III",
+        "topic": "Paging",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "paging operation, page number, offset, frame",
+    },
+    {
+        "title": "Paging Hardware Support",
+        "content": "Paging requires hardware and operating-system support to translate logical page references into physical frame locations. Address translation hardware works with page-management structures maintained by the operating system.",
+        "unit": "Unit III",
+        "topic": "Paging Hardware",
+        "category": "Concept Explanation",
+        "difficulty": "Hard",
+        "keywords": "paging hardware, address translation, page table",
+    },
+    {
+        "title": "Paging Protection",
+        "content": "Paging can support memory protection by associating protection information with memory-management structures. This helps control which operations are permitted for pages.",
+        "unit": "Unit III",
+        "topic": "Paging Protection",
+        "category": "Concept Explanation",
+        "difficulty": "Hard",
+        "keywords": "paging protection, memory protection",
+    },
+    {
+        "title": "Paging Sharing",
+        "content": "Paging can allow suitable pages to be shared between processes when the operating system permits sharing. Sharing can reduce duplicated memory usage for common information.",
+        "unit": "Unit III",
+        "topic": "Paging Sharing",
+        "category": "Concept Explanation",
+        "difficulty": "Hard",
+        "keywords": "paging sharing, shared pages, memory",
+    },
+    {
+        "title": "Paging Disadvantages",
+        "content": "Paging introduces overhead associated with address translation and page-management structures. It can also involve memory overhead for page tables and performance costs when required pages are not currently available in physical memory.",
+        "unit": "Unit III",
+        "topic": "Paging",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "paging disadvantages, page table, memory overhead",
+    },
+
+    {
+        "title": "Virtual Memory",
+        "content": "Virtual memory allows a process to use a logical address space larger than the available physical memory by keeping only required portions of the process in main memory and maintaining other portions in secondary storage.",
+        "unit": "Unit III",
+        "topic": "Virtual Memory",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "virtual memory, logical memory, physical memory",
+    },
+    {
+        "title": "Demand Paging",
+        "content": "Demand paging loads a page into physical memory when the page is actually required. If the referenced page is not present, a page fault occurs and the operating system must obtain the page before execution can continue.",
+        "unit": "Unit III",
+        "topic": "Demand Paging",
+        "category": "Concept Explanation",
+        "difficulty": "Hard",
+        "keywords": "demand paging, page fault, virtual memory",
+    },
+    {
+        "title": "Page Replacement",
+        "content": "Page replacement determines which page currently in physical memory should be removed when a required page must be loaded but no suitable free frame is available.",
+        "unit": "Unit III",
+        "topic": "Page Replacement",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "page replacement, virtual memory, page fault",
+    },
+    {
+        "title": "Optimal Page Replacement",
+        "content": "Optimal page replacement selects the page whose next use is farthest in the future. It provides an ideal reference for comparing page-replacement algorithms, although future references are generally not known during real execution.",
+        "unit": "Unit III",
+        "topic": "Optimal Page Replacement",
+        "category": "Concept Explanation",
+        "difficulty": "Hard",
+        "keywords": "optimal page replacement, page faults",
+    },
+    {
+        "title": "FIFO Page Replacement",
+        "content": "FIFO page replacement removes the page that has been in memory for the longest time according to the replacement order. It is simple to implement but may not always produce the fewest page faults.",
+        "unit": "Unit III",
+        "topic": "FIFO Page Replacement",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "FIFO, page replacement, page faults",
+    },
+    {
+        "title": "LRU Page Replacement",
+        "content": "Least Recently Used (LRU) page replacement selects the page that has not been used for the longest time among the pages currently in memory.",
+        "unit": "Unit III",
+        "topic": "LRU Page Replacement",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "LRU, page replacement, page faults",
+    },
+
+    # ============================================================
+    # UNIT IV — FILE MANAGEMENT AND DISK MANAGEMENT
+    # ============================================================
+
+    {
+        "title": "File Management",
+        "content": "File management is the operating system function responsible for organizing files and directories and providing operations for storing, accessing and managing persistent information.",
+        "unit": "Unit IV",
+        "topic": "File Management",
+        "category": "Concept Explanation",
+        "difficulty": "Easy",
+        "keywords": "file management, files, directories, OS",
+    },
+    {
+        "title": "File Access Methods",
+        "content": "File access methods describe how data within a file is accessed. Common approaches include sequential access and direct or random access, depending on the organization and requirements of the file system.",
+        "unit": "Unit IV",
+        "topic": "File Access Methods",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "file access, sequential access, direct access",
+    },
+    {
+        "title": "File Types",
+        "content": "File types identify or describe the nature and intended use of stored information. Operating systems and file systems can use file types and associated metadata to manage files appropriately.",
+        "unit": "Unit IV",
+        "topic": "File Types",
+        "category": "Concept Explanation",
+        "difficulty": "Easy",
+        "keywords": "file types, files, file system",
+    },
+    {
+        "title": "File Operations",
+        "content": "Common file operations include creating, opening, reading, writing, repositioning, closing and deleting files. The operating system provides controlled mechanisms for these operations.",
+        "unit": "Unit IV",
+        "topic": "File Operations",
+        "category": "Concept Explanation",
+        "difficulty": "Easy",
+        "keywords": "file operations, open, read, write, close",
+    },
+    {
+        "title": "Directory Structure",
+        "content": "A directory structure organizes files and directories so that users and programs can locate and manage stored information. Directories can be arranged into hierarchical structures.",
+        "unit": "Unit IV",
+        "topic": "Directory Structure",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "directory, hierarchy, file system",
+    },
+    {
+        "title": "File System Structure",
+        "content": "A file system provides the structures and mechanisms required to organize, store, locate and manage files on storage devices. It defines how files and directories are represented and accessed.",
+        "unit": "Unit IV",
+        "topic": "File System Structure",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "file system, files, directories, storage",
+    },
+
+    {
+        "title": "Contiguous File Allocation",
+        "content": "Contiguous allocation stores the blocks of a file in consecutive storage locations. It provides efficient sequential and direct access but can suffer from external fragmentation and difficulty growing files.",
+        "unit": "Unit IV",
+        "topic": "File Allocation",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "contiguous allocation, file allocation, storage",
+    },
+    {
+        "title": "Linked File Allocation",
+        "content": "Linked allocation stores file blocks as a linked sequence of storage locations. The blocks do not need to be contiguous, but additional linking information is required to follow the file.",
+        "unit": "Unit IV",
+        "topic": "File Allocation",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "linked allocation, file allocation, blocks",
+    },
+    {
+        "title": "Indexed File Allocation",
+        "content": "Indexed allocation uses an index block or indexing structure containing references to the blocks belonging to a file. This allows file blocks to be located without requiring them to be contiguous.",
+        "unit": "Unit IV",
+        "topic": "File Allocation",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "indexed allocation, index block, file allocation",
+    },
+
+    {
+        "title": "Disk Structure",
+        "content": "A disk is organized into physical or logical storage structures used to store data. Disk organization and the movement of storage hardware affect the performance of disk access.",
+        "unit": "Unit IV",
+        "topic": "Disk Structure",
+        "category": "Concept Explanation",
+        "difficulty": "Easy",
+        "keywords": "disk structure, storage, disk",
+    },
+    {
+        "title": "Disk Scheduling",
+        "content": "Disk scheduling determines the order in which pending disk requests are serviced. The objective is generally to improve disk access performance while satisfying the pending requests.",
+        "unit": "Unit IV",
+        "topic": "Disk Scheduling",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "disk scheduling, disk requests, performance",
+    },
+    {
+        "title": "Disk FCFS Scheduling",
+        "content": "FCFS disk scheduling services disk requests in the order in which they arrive. It is simple and fair in request order but may result in inefficient head movement.",
+        "unit": "Unit IV",
+        "topic": "Disk FCFS",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "disk FCFS, disk scheduling",
+    },
+    {
+        "title": "SSTF Disk Scheduling",
+        "content": "Shortest Seek Time First (SSTF) selects the pending disk request requiring the shortest seek distance from the current head position. It can reduce immediate head movement but may cause some requests to wait for a long time.",
+        "unit": "Unit IV",
+        "topic": "SSTF",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "SSTF, shortest seek time first, disk scheduling",
+    },
+    {
+        "title": "SCAN Disk Scheduling",
+        "content": "SCAN disk scheduling moves the disk head in one direction while servicing requests and then reverses direction, resembling an elevator movement pattern.",
+        "unit": "Unit IV",
+        "topic": "SCAN",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "SCAN, disk scheduling, elevator algorithm",
+    },
+    {
+        "title": "C SCAN Disk Scheduling",
+        "content": "C-SCAN disk scheduling services requests while moving in one direction. After reaching the end, the head returns to the beginning without servicing requests during the return movement according to the standard C-SCAN model.",
+        "unit": "Unit IV",
+        "topic": "C SCAN",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "C-SCAN, disk scheduling, circular scan",
+    },
+
+    {
+        "title": "Disk Reliability",
+        "content": "Disk reliability concerns the ability of storage hardware and the storage system to preserve data correctly and remain operational. Operating systems and storage technologies use mechanisms to detect, manage and recover from storage problems.",
+        "unit": "Unit IV",
+        "topic": "Disk Reliability",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "disk reliability, storage, data",
+    },
+    {
+        "title": "Disk Formatting",
+        "content": "Disk formatting prepares storage media or logical storage structures for use by establishing the structures required for storing and managing data. Formatting is associated with preparing a disk for a file system.",
+        "unit": "Unit IV",
+        "topic": "Disk Formatting",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "disk formatting, file system, storage",
+    },
+
+    {
+        "title": "UNIX Operating System Case Study",
+        "content": "UNIX is an operating system family known for its multiuser and multitasking design. Its environment provides processes, files, directories, permissions and command-line tools as important parts of system interaction.",
+        "unit": "Unit IV",
+        "topic": "UNIX Case Study",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "UNIX, OS case study, processes, files",
+    },
+    {
+        "title": "Windows Operating System Case Study",
+        "content": "Windows is an operating system family providing graphical and programmatic interfaces for managing processes, memory, files, devices and other system resources.",
+        "unit": "Unit IV",
+        "topic": "Windows Case Study",
+        "category": "Concept Explanation",
+        "difficulty": "Medium",
+        "keywords": "Windows, OS case study, processes, files",
+    },
+
+    # ============================================================
+    # EXAM-FOCUSED OS KNOWLEDGE
+    # ============================================================
+
+    {
+        "title": "OS Scheduling Numerical Strategy",
+        "content": "For CPU scheduling numericals, first identify the scheduling algorithm and process arrival and burst information. Construct the execution order or Gantt chart before calculating completion time, turnaround time and waiting time.",
+        "unit": "Unit I",
+        "topic": "Scheduling Numericals",
+        "category": "Exam Strategy",
+        "difficulty": "Medium",
+        "keywords": "scheduling numerical, Gantt chart, CT, TAT, WT",
+    },
+    {
+        "title": "OS Gantt Chart",
+        "content": "A Gantt chart represents the execution order of processes over time. It is useful for determining completion times and then calculating turnaround and waiting times in CPU scheduling problems.",
+        "unit": "Unit I",
+        "topic": "Scheduling Numericals",
+        "category": "Exam Tip",
+        "difficulty": "Easy",
+        "keywords": "Gantt chart, scheduling, completion time",
+    },
+    {
+        "title": "Deadlock Exam Strategy",
+        "content": "For a deadlock theory answer, begin with the definition, explain the necessary conditions, and then discuss the requested prevention, avoidance, detection or recovery method. For Banker's Algorithm questions, carefully track available, allocation, maximum and remaining resource requirements.",
+        "unit": "Unit II",
+        "topic": "Deadlock Exam Strategy",
+        "category": "Exam Strategy",
+        "difficulty": "Medium",
+        "keywords": "deadlock, exam strategy, Banker algorithm",
+    },
+    {
+        "title": "Page Replacement Numerical Strategy",
+        "content": "For page replacement numericals, write the reference string clearly, maintain the frame contents after each reference, identify page faults and apply the exact replacement rule of the selected algorithm such as FIFO, LRU or Optimal.",
+        "unit": "Unit III",
+        "topic": "Page Replacement Numericals",
+        "category": "Exam Strategy",
+        "difficulty": "Hard",
+        "keywords": "page replacement, FIFO, LRU, optimal, page faults",
+    },
+    {
+        "title": "Disk Scheduling Numerical Strategy",
+        "content": "For disk scheduling numericals, identify the initial head position and pending requests, apply the selected scheduling algorithm, write the service order and then calculate the required head movement according to the problem.",
+        "unit": "Unit IV",
+        "topic": "Disk Scheduling Numericals",
+        "category": "Exam Strategy",
+        "difficulty": "Medium",
+        "keywords": "disk scheduling, SSTF, SCAN, C-SCAN, numerical",
+    },
+]
+
+
+def seed_os():
+    connection = sqlite3.connect(DATABASE_NAME)
+    cursor = connection.cursor()
+
+    added = 0
+    skipped = 0
+
+    for item in os_knowledge:
+
+        cursor.execute(
+            """
+            SELECT id
+            FROM knowledge
+            WHERE title = ?
+              AND subject = ?
+              AND topic = ?
+            """,
+            (
+                item["title"],
+                "Operating Systems",
+                item["topic"]
+            )
+        )
+
+        existing = cursor.fetchone()
+
+        if existing:
+            skipped += 1
+            continue
+
+        cursor.execute(
+            """
+            INSERT INTO knowledge (
+                title,
+                content,
+                subject,
+                unit,
+                topic,
+                category,
+                difficulty,
+                keywords,
+                author
+            )
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """,
+            (
+                item["title"],
+                item["content"],
+                "Operating Systems",
+                item["unit"],
+                item["topic"],
+                item["category"],
+                item["difficulty"],
+                item["keywords"],
+                "EchoMind"
+            )
+        )
+
+        added += 1
+
+    connection.commit()
+    connection.close()
+
+    print(f"Added {added} Operating Systems knowledge entries.")
+    print(f"Skipped {skipped} existing Operating Systems entries.")
+
+
+if __name__ == "__main__":
+    seed_os()

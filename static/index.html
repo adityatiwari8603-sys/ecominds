@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EchoMind // Academic Network</title>
+<style>
+:root{--bg:#020604;--panel:#07100c;--panel2:#091611;--green:#00ff88;--cyan:#00e5ff;--muted:#6e9182;--line:rgba(0,255,136,.16);--font:"Courier New",Consolas,monospace}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{min-height:100vh;background:radial-gradient(circle at 20% 0%,rgba(0,255,136,.08),transparent 34%),radial-gradient(circle at 100% 30%,rgba(0,229,255,.06),transparent 28%),linear-gradient(rgba(0,255,136,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,136,.018) 1px,transparent 1px),var(--bg);background-size:auto,auto,32px 32px,32px 32px,auto;color:#d7fff0;font-family:var(--font);overflow-x:hidden}body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;background:linear-gradient(to bottom,transparent 50%,rgba(0,255,136,.024) 51%);background-size:100% 4px;opacity:.45}::selection{background:var(--green);color:#00150b}::-webkit-scrollbar{width:9px}::-webkit-scrollbar-track{background:#020604}::-webkit-scrollbar-thumb{background:#0b5337;border:1px solid var(--green);border-radius:2px}
+header{position:sticky;top:0;z-index:1000;border-bottom:1px solid rgba(0,255,136,.28);background:rgba(2,6,4,.93);backdrop-filter:blur(10px);box-shadow:0 8px 30px rgba(0,0,0,.4),0 0 25px rgba(0,255,136,.05)}.header-main{display:flex;align-items:center;justify-content:space-between;gap:22px;padding:18px 26px 13px}.logo-wrap{display:flex;align-items:center;gap:13px}.logo-orb{width:42px;height:42px;border:1px solid var(--green);display:grid;place-items:center;color:var(--green);box-shadow:0 0 18px rgba(0,255,136,.25);font-size:20px}.logo{color:#fff;font-size:20px;font-weight:900;letter-spacing:1px}.logo span{color:var(--green)}.tagline{color:var(--muted);font-size:10px;letter-spacing:1px;margin-top:4px}.header-status{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.status-pill{padding:6px 9px;border:1px solid var(--line);color:var(--muted);font-size:9px;letter-spacing:1px;background:rgba(0,255,136,.025)}.status-pill strong{color:var(--green)}nav{display:flex;flex-wrap:wrap;gap:7px;padding:0 26px 15px}nav button,.btn,.tab-btn{appearance:none;border:1px solid rgba(0,255,136,.32);background:rgba(0,255,136,.035);color:var(--green);font:700 11px var(--font);letter-spacing:1px;padding:10px 13px;cursor:pointer;transition:.18s ease}nav button:hover,.btn:hover,.tab-btn:hover{border-color:var(--green);background:rgba(0,255,136,.10);box-shadow:0 0 14px rgba(0,255,136,.16);transform:translateY(-1px)}nav button.active,.tab-btn.active{background:rgba(0,255,136,.13);border-color:var(--green);color:#fff;box-shadow:inset 0 0 18px rgba(0,255,136,.05),0 0 12px rgba(0,255,136,.13)}
+main{width:min(1500px,calc(100% - 34px));margin:18px auto 45px}.section{display:none;animation:boot .25s ease}.section.active{display:block}@keyframes boot{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}.section-title{font-size:24px;letter-spacing:2px;color:#fff;margin:22px 0 5px}.section-title:before{content:"// ";color:var(--green)}.section-subtitle{color:var(--muted);font-size:11px;margin-bottom:20px}.terminal-strip{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;border:1px solid rgba(0,255,136,.18);background:linear-gradient(90deg,rgba(0,255,136,.05),transparent);padding:10px 12px;margin:0 0 18px;color:var(--muted);font-size:10px}.terminal-strip .ok{color:var(--green)}
+.stats-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:11px;margin:18px 0}.hacker-stat{position:relative;background:linear-gradient(145deg,rgba(5,16,12,.96),rgba(6,12,17,.96));border:1px solid rgba(0,255,136,.22);padding:17px;min-height:124px;overflow:hidden;box-shadow:0 0 18px rgba(0,255,136,.08)}.hacker-stat:before{content:"SYS // LIVE";position:absolute;top:8px;right:9px;color:#3b6655;font-size:8px;letter-spacing:1px}.hacker-stat:hover{border-color:var(--green);box-shadow:0 0 22px rgba(0,255,136,.16);transform:translateY(-2px)}.stat-icon{color:var(--green);font-size:17px}.stat-number{font-size:29px;font-weight:900;color:#fff;margin-top:8px;text-shadow:0 0 14px rgba(0,255,136,.23)}.stat-label{color:var(--green);font-size:10px;font-weight:800;letter-spacing:1px;margin-top:7px}.stat-status{color:var(--muted);font-size:9px;margin-top:7px}
+.dashboard-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.dashboard-card,.form-card,.panel,.knowledge-card,.result-card,.source-card,.modal-box{background:linear-gradient(145deg,rgba(7,18,13,.94),rgba(6,12,17,.94));border:1px solid rgba(0,255,136,.18);box-shadow:0 0 18px rgba(0,255,136,.07)}.dashboard-card{padding:18px;position:relative}.dashboard-card h3{font-size:14px;color:#fff;letter-spacing:1px;margin-bottom:12px}.dashboard-card h3:before{content:"[ ";color:var(--green)}.dashboard-card h3:after{content:" ]";color:var(--green)}.dashboard-card h4{margin:16px 0 9px;color:var(--cyan);font-size:11px;letter-spacing:1px;text-transform:uppercase;border-left:2px solid var(--cyan);padding-left:9px}.tag-container{display:flex;flex-wrap:wrap;gap:7px}.tag{display:inline-flex;align-items:center;padding:7px 9px;border:1px solid rgba(0,229,255,.16);background:rgba(0,229,255,.025);color:#9beef8;font-size:10px;line-height:1.3}.subject-card,.category-card{display:flex;justify-content:space-between;align-items:center;gap:15px;border:1px solid rgba(0,255,136,.12);padding:11px 12px;margin-bottom:8px;background:rgba(0,255,136,.02)}.subject-card strong,.category-card strong{font-size:11px;color:#d8fff0}.count{font-size:9px;color:var(--muted);margin-top:4px}.subject-card .mini-action,.category-card .mini-action{color:var(--green);font-size:9px;font-weight:800}.topic-launch{display:block;width:100%;padding:17px;border:1px dashed rgba(0,255,136,.35);color:var(--green);background:rgba(0,255,136,.025);font:800 11px var(--font);letter-spacing:1px;cursor:pointer;text-align:left}.topic-launch:hover{background:rgba(0,255,136,.08);box-shadow:0 0 18px rgba(0,255,136,.12)}.junior-panel{grid-column:1/-1}.junior-panel:before{content:"STUDENT ACCESS // ACADEMIC NETWORK";display:block;color:var(--green);font-size:9px;letter-spacing:2px;border-bottom:1px solid rgba(0,255,136,.12);padding-bottom:9px;margin-bottom:13px}.junior-panel .tag-container{padding:10px;background:rgba(0,0,0,.18);border:1px solid rgba(0,255,136,.07);margin-bottom:8px}.junior-tag{display:inline-flex!important;align-items:center;justify-content:center;min-height:39px;padding:9px 13px!important;margin:0!important;background:rgba(0,255,136,.035)!important;color:var(--green)!important;border:1px solid rgba(0,255,136,.25)!important;border-radius:4px!important;font:700 10px var(--font)!important;cursor:pointer;white-space:nowrap;transition:.18s ease}.junior-tag:hover{background:rgba(0,255,136,.12)!important;border-color:var(--green)!important;color:#fff!important;box-shadow:0 0 12px rgba(0,255,136,.17);transform:translateY(-2px)}
+.form-card{padding:21px;max-width:1050px}.form-group{margin-bottom:16px}.form-group label{display:block;color:var(--cyan);font-size:10px;letter-spacing:1px;margin-bottom:7px}input,textarea,select{width:100%;background:#030806;color:#d9fff1;border:1px solid rgba(0,255,136,.22);padding:12px;font:11px var(--font);outline:none;border-radius:2px}input:focus,textarea:focus,select:focus{border-color:var(--green);box-shadow:0 0 13px rgba(0,255,136,.12)}textarea{min-height:150px;resize:vertical}select option{background:#07100c;color:#fff}.form-row{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.btn{background:rgba(0,255,136,.07)}
+.answer-card{margin-top:18px;padding:21px;border:1px solid rgba(0,229,255,.2);background:linear-gradient(145deg,rgba(0,20,22,.62),rgba(5,14,12,.92));box-shadow:0 0 20px rgba(0,229,255,.07)}.answer-card h2{color:var(--cyan);font-size:14px;margin-bottom:13px}.answer-content p{margin:8px 0;line-height:1.65;color:#c9eee2;font-size:12px}.answer-content li{margin-left:20px;line-height:1.7;font-size:12px}.feedback-area{margin-top:17px;padding-top:14px;border-top:1px solid rgba(0,255,136,.1)}.feedback-title{color:var(--muted);font-size:10px;margin-bottom:9px}.feedback-buttons{display:flex;gap:8px;flex-wrap:wrap}.feedback-btn{border:1px solid rgba(0,255,136,.22);background:rgba(0,255,136,.025);color:var(--green);font:700 10px var(--font);padding:9px 11px;cursor:pointer}.feedback-btn:hover{background:rgba(0,255,136,.1);border-color:var(--green)}
+.knowledge-grid,.search-results{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.knowledge-card,.result-card{padding:17px;cursor:pointer;transition:.18s ease}.knowledge-card:hover,.result-card:hover{border-color:var(--green);transform:translateY(-2px)}.knowledge-card h3,.result-card h3{font-size:13px;color:#fff;margin-bottom:8px}.knowledge-meta{font-size:9px;color:var(--cyan);margin-bottom:10px}.knowledge-content{font-size:11px;color:#a7cbbd;line-height:1.55;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}.search-toolbar{display:flex;gap:8px;margin-bottom:14px}.search-toolbar input{flex:1}.sources{margin-top:16px}.sources-title{color:var(--green);font-size:10px;letter-spacing:1px;margin-bottom:9px}.source-card{padding:12px;margin-bottom:8px;border-left:2px solid var(--cyan)}.source-card strong{display:block;font-size:11px;color:#fff}.source-card small{display:block;color:var(--muted);font-size:9px;margin-top:4px}
+.modal{position:fixed;inset:0;z-index:2000;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.78);backdrop-filter:blur(7px)}.modal.show{display:flex}.modal-box{width:min(850px,100%);max-height:88vh;overflow:auto;padding:23px;position:relative}.modal-close{position:absolute;right:14px;top:12px;border:1px solid rgba(255,77,109,.35);background:rgba(255,77,109,.05);color:#ff718c;padding:5px 8px;cursor:pointer;font:700 10px var(--font)}.modal-box h2{font-size:17px;color:#fff;padding-right:80px}.modal-meta{color:var(--cyan);font-size:9px;margin:9px 0 15px}.modal-content{color:#c9eee2;font-size:12px;line-height:1.7;white-space:pre-wrap}.toast{position:fixed;right:20px;bottom:20px;z-index:3000;display:none;padding:12px 15px;background:#06130d;border:1px solid var(--green);color:var(--green);font:700 10px var(--font);box-shadow:0 0 20px rgba(0,255,136,.15)}.toast.show{display:block}footer{text-align:center;color:#35564a;font-size:9px;letter-spacing:1px;padding:28px 0 0}
+@media(max-width:1050px){.stats-grid{grid-template-columns:repeat(2,1fr)}.dashboard-grid,.knowledge-grid,.search-results{grid-template-columns:1fr}.form-row{grid-template-columns:1fr}.header-main{align-items:flex-start;flex-direction:column}.header-status{justify-content:flex-start}}@media(max-width:600px){main{width:calc(100% - 18px)}.stats-grid{grid-template-columns:1fr}.header-main{padding:14px}.header-status{width:100%}nav{padding:0 14px 12px}nav button{flex:1}.search-toolbar{flex-direction:column}.junior-tag{white-space:normal!important;text-align:center}}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-main">
+    <div class="logo-wrap">
+      <div class="logo-orb">⌁</div>
+      <div><div class="logo"><span>Echo</span>Mind</div><div class="tagline">THE KNOWLEDGE THAT NEVER GRADUATES // ACADEMIC NETWORK</div></div>
+    </div>
+    <div class="header-status">
+      <div class="status-pill">NODE <strong>ONLINE</strong></div>
+      <div class="status-pill">RAG <strong>ACTIVE</strong></div>
+      <div class="status-pill">DB <strong>SYNCED</strong></div>
+      <div class="status-pill">AI <strong>READY</strong></div>
+    </div>
+  </div>
+  <nav id="mainNav">
+  <button data-section="dashboard" onclick="showSection('dashboard')">[01] DASHBOARD</button>
+  <button data-section="ask" onclick="showSection('ask')">[02] ASK AI</button>
+  <button data-section="feed" onclick="showSection('feed')">[03] KNOWLEDGE</button>
+  <button data-section="search" onclick="showSection('search')">[04] SEARCH</button>
+  <button data-section="share" onclick="showSection('share')">[05] SHARE</button>
+  <button onclick="openAuthModal()">[06] LOGIN</button>
+</nav>
+</header>
+<main>
+<section id="dashboard" class="section active">
+  <h1 class="section-title">ECHOMIND CONTROL CENTER</h1>
+  <div class="section-subtitle">ACADEMIC INTELLIGENCE // COLLEGE KNOWLEDGE // REAL-TIME INDEX</div>
+  <div class="terminal-strip"><span>root@echomind:~$ system_status</span><span class="ok">[ OK ] DATABASE ONLINE // FEEDBACK PIPELINE ONLINE</span></div>
+  <div class="stats-grid">
+    <div class="hacker-stat"><div class="stat-icon">◉</div><div id="totalKnowledge" class="stat-number">0</div><div class="stat-label">KNOWLEDGE RECORDS</div><div class="stat-status">SYSTEM INDEXED</div></div>
+    <div class="hacker-stat"><div class="stat-icon">◉</div><div id="totalSubjects" class="stat-number">0</div><div class="stat-label">SUBJECTS</div><div class="stat-status">ACTIVE</div></div>
+    <div class="hacker-stat"><div class="stat-icon">◉</div><div id="totalTopics" class="stat-number">0</div><div class="stat-label">TOPICS</div><div class="stat-status">INDEXED</div></div>
+    <div class="hacker-stat"><div class="stat-icon">◉</div><div id="totalHelpful" class="stat-number">0</div><div class="stat-label">HELPFUL FEEDBACK</div><div class="stat-status">POSITIVE</div></div>
+    <div class="hacker-stat"><div class="stat-icon">◉</div><div id="totalNotHelpful" class="stat-number">0</div><div class="stat-label">NOT HELPFUL</div><div class="stat-status">REVIEW QUEUE</div></div>
+  </div>
+  <div class="dashboard-grid">
+    <div class="dashboard-card"><h3>SUBJECT MATRIX</h3><div id="subjectsList"></div></div>
+    <div class="dashboard-card"><h3>TOPIC INDEX</h3><button class="topic-launch" onclick="openTopicExplorer()">🎯 OPEN 650+ KNOWLEDGE TOPICS →</button><div id="topicPreview" class="tag-container" style="margin-top:10px"></div></div>
+    <div class="dashboard-card"><h3>CATEGORY CHANNELS</h3><div id="categoriesList"></div></div>
+    <div class="dashboard-card junior-panel"><h3>JUNIOR STUDENT HUB</h3><h4>SEMESTER 1</h4><div class="tag-container"><button class="junior-tag" data-subject="PPS">PPS</button><button class="junior-tag" data-subject="Physics">Physics</button><button class="junior-tag" data-subject="Artificial Intelligence">Artificial Intelligence</button><button class="junior-tag" data-subject="Mathematics-I">Mathematics-I</button><button class="junior-tag" data-subject="BME">BME</button></div><h4>SEMESTER 2</h4><div class="tag-container"><button class="junior-tag" data-subject="BEEE">BEEE</button><button class="junior-tag" data-subject="Chemistry">Chemistry</button><button class="junior-tag" data-subject="Mathematics-II">Mathematics-II</button><button class="junior-tag" data-subject="Workshop Technology">Workshop Technology</button></div><h4>CS CORE</h4><div class="tag-container"><button class="junior-tag" data-subject="Data Structures & Algorithms">Data Structures &amp; Algorithms</button><button class="junior-tag" data-subject="OOP">OOP</button><button class="junior-tag" data-subject="Operating Systems">Operating Systems</button><button class="junior-tag" data-subject="DBMS">DBMS</button><button class="junior-tag" data-subject="Computer Networks">Computer Networks</button><button class="junior-tag" data-subject="Computer Fundamentals">Computer Fundamentals</button></div></div>
+  </div>
+</section>
+<section id="ask" class="section"><h1 class="section-title">AI QUERY TERMINAL</h1><div class="section-subtitle">Ask college-specific questions. Answers stay grounded in indexed EchoMind knowledge.</div><div class="form-card"><div class="form-group"><label for="question">QUERY</label><textarea id="question" placeholder="Example: Explain FCFS scheduling with a solved example..."></textarea></div><button id="askButton" class="btn" onclick="askEchoMind()">EXECUTE QUERY ↵</button></div><div id="answerArea"></div></section>
+<section id="feed" class="section"><h1 class="section-title">KNOWLEDGE STREAM</h1><div class="section-subtitle">Newest academic contributions indexed by EchoMind.</div><div id="knowledgeFeed" class="knowledge-grid"></div></section>
+<section id="search" class="section"><h1 class="section-title">KNOWLEDGE SEARCH</h1><div class="section-subtitle">Search by subject, topic, concept, category, formula or keyword.</div><div class="search-toolbar"><input id="searchInput" placeholder="type query and press ENTER..." onkeydown="if(event.key==='Enter') searchKnowledge()"><button class="btn" onclick="searchKnowledge()">SEARCH ↵</button></div><div id="searchResults" class="search-results"></div></section>
+<section id="share" class="section"><h1 class="section-title">UPLOAD KNOWLEDGE</h1><div class="section-subtitle">Inject useful academic knowledge into the EchoMind network.</div><div class="form-card"><div class="form-row"><div class="form-group"><label for="shareTitle">TITLE</label><input id="shareTitle" placeholder="Example: FCFS Scheduling"></div><div class="form-group"><label for="shareAuthor">AUTHOR</label><input id="shareAuthor" placeholder="Your name"></div></div><div class="form-row"><div class="form-group"><label for="shareSubject">SUBJECT</label><select id="shareSubject"><option value="">Select subject</option><option>PPS</option><option>Physics</option><option>Artificial Intelligence</option><option>Mathematics-I</option><option>BME</option><option>BEEE</option><option>Chemistry</option><option>Mathematics-II</option><option>Workshop Technology</option><option>Data Structures & Algorithms</option><option>OOP</option><option>Operating Systems</option><option>DBMS</option><option>Computer Networks</option><option>Computer Fundamentals</option><option>Python Programming</option><option>Software Engineering</option><option>Digital Electronics</option><option>Mathematics-III</option></select></div><div class="form-group"><label for="shareUnit">UNIT</label><select id="shareUnit"><option value="">Select unit</option><option>Unit I</option><option>Unit II</option><option>Unit III</option><option>Unit IV</option><option>Unit V</option></select></div></div><div class="form-row"><div class="form-group"><label for="shareTopic">TOPIC</label><input id="shareTopic" placeholder="CPU Scheduling"></div><div class="form-group"><label for="shareCategory">CATEGORY</label><select id="shareCategory"><option value="">Select category</option><option>Concept Explanation</option><option>Important Question</option><option>Numerical Problem</option><option>Viva Question</option><option>Study Notes</option><option>Practical Tip</option><option>Exam Strategy</option><option>Application</option><option>Problem Solving</option><option>Important Formula</option><option>Project Knowledge</option></select></div></div><div class="form-row"><div class="form-group"><label for="shareDifficulty">DIFFICULTY</label><select id="shareDifficulty"><option value="">Select difficulty</option><option>Easy</option><option>Medium</option><option>Hard</option></select></div><div class="form-group"><label for="shareKeywords">KEYWORDS</label><input id="shareKeywords" placeholder="fcfs, scheduling, cpu"></div></div><div class="form-group"><label for="shareContent">KNOWLEDGE PAYLOAD</label><textarea id="shareContent" placeholder="Write the explanation, notes, formula, solved example, viva answer, or practical tip..."></textarea></div><button class="btn" onclick="shareKnowledge()">UPLOAD TO NETWORK ↥</button></div></section>
+</main>
+<footer>ECHOMIND // COLLEGE KNOWLEDGE NETWORK // THE KNOWLEDGE THAT NEVER GRADUATES</footer>
+<div id="modal" class="modal"><div class="modal-box"><button class="modal-close" onclick="closeModal()">CLOSE X</button><div id="modalContent"></div></div></div>
+<div id="authModal" class="modal">
+  <div class="modal-box">
+
+    <button class="modal-close" onclick="closeAuthModal()">
+      CLOSE X
+    </button>
+
+    <h2 id="authTitle">🔐 ECHOMIND LOGIN</h2>
+
+    <div class="modal-meta">
+      ACADEMIC NETWORK // SECURE ACCESS
+    </div>
+
+    <div id="loginForm">
+
+      <div class="form-group">
+        <label for="loginEmail">EMAIL</label>
+        <input
+          id="loginEmail"
+          type="email"
+          placeholder="student@example.com"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="loginPassword">PASSWORD</label>
+        <input
+          id="loginPassword"
+          type="password"
+          placeholder="Enter password"
+        >
+      </div>
+
+      <button class="btn" onclick="loginUser()">
+        LOGIN →
+      </button>
+
+      <div style="margin-top:14px;color:var(--muted);font-size:10px">
+        New student?
+        <button
+          class="feedback-btn"
+          onclick="showRegisterForm()"
+        >
+          CREATE ACCOUNT
+        </button>
+      </div>
+
+    </div>
+
+    <div id="registerForm" style="display:none">
+
+      <div class="form-group">
+        <label for="registerName">FULL NAME</label>
+        <input
+          id="registerName"
+          type="text"
+          placeholder="Your name"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="registerEmail">EMAIL</label>
+        <input
+          id="registerEmail"
+          type="email"
+          placeholder="student@example.com"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="registerPassword">PASSWORD</label>
+        <input
+          id="registerPassword"
+          type="password"
+          placeholder="Minimum 6 characters"
+        >
+      </div>
+
+      <div class="form-row">
+
+        <div class="form-group">
+          <label for="registerSemester">SEMESTER</label>
+
+          <select id="registerSemester">
+            <option value="1">Semester 1</option>
+            <option value="2">Semester 2</option>
+            <option value="3" selected>Semester 3</option>
+            <option value="4">Semester 4</option>
+            <option value="5">Semester 5</option>
+            <option value="6">Semester 6</option>
+            <option value="7">Semester 7</option>
+            <option value="8">Semester 8</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="registerBranch">BRANCH</label>
+
+          <select id="registerBranch">
+            <option value="CSE" selected>CSE</option>
+            <option value="ECE">ECE</option>
+            <option value="ME">ME</option>
+            <option value="CE">CE</option>
+            <option value="EE">EE</option>
+          </select>
+        </div>
+
+      </div>
+
+      <button class="btn" onclick="registerUser()">
+        CREATE ACCOUNT →
+      </button>
+
+      <div style="margin-top:14px;color:var(--muted);font-size:10px">
+        Already registered?
+        <button
+          class="feedback-btn"
+          onclick="showLoginForm()"
+        >
+          LOGIN
+        </button>
+      </div>
+
+    </div>
+
+    <div
+      id="authMessage"
+      style="margin-top:15px;font-size:10px"
+    ></div>
+
+  </div>
+</div>
+<div id="toast" class="toast"></div>
+<script>
+const $=id=>document.getElementById(id);
+let knowledgeCache=[];
+function escapeHtml(value){return String(value??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;')}
+function formatInline(v){return escapeHtml(v)}
+function formatAnswer(text){
+  const safe=escapeHtml(text||'No answer returned.');
+  const lines=safe.split('\n');let html='',inList=false;
+  for(const line of lines){const t=line.trim();if(!t){if(inList){html+='</ul>';inList=false}continue}if(/^[-*•]\s+/.test(t)){if(!inList){html+='<ul>';inList=true}html+='<li>'+t.replace(/^[-*•]\s+/,'')+'</li>'}else{if(inList){html+='</ul>';inList=false}html+='<p>'+t+'</p>'}}
+  if(inList)html+='</ul>';return html;
+}
+let currentUser = null;
+
+
+function openAuthModal() {
+  $('authModal').classList.add('show');
+  showLoginForm();
+}
+
+
+function closeAuthModal() {
+  $('authModal').classList.remove('show');
+}
+
+
+function showLoginForm() {
+  $('loginForm').style.display = 'block';
+  $('registerForm').style.display = 'none';
+
+  $('authTitle').textContent = '🔐 ECHOMIND LOGIN';
+  $('authMessage').textContent = '';
+}
+
+
+function showRegisterForm() {
+  $('loginForm').style.display = 'none';
+  $('registerForm').style.display = 'block';
+
+  $('authTitle').textContent = '📝 CREATE ECHOMIND ACCOUNT';
+  $('authMessage').textContent = '';
+}
+
+
+async function registerUser() {
+
+  const name =
+    $('registerName').value.trim();
+
+  const email =
+    $('registerEmail').value.trim();
+
+  const password =
+    $('registerPassword').value;
+
+  const semester =
+    $('registerSemester').value;
+
+  const branch =
+    $('registerBranch').value;
+
+
+  if (!name || !email || !password) {
+
+    $('authMessage').textContent =
+      'ERROR // NAME, EMAIL AND PASSWORD REQUIRED';
+
+    $('authMessage').style.color =
+      '#ff718c';
+
+    return;
+  }
+
+
+  try {
+
+    const response = await fetch(
+      '/register',
+      {
+        method: 'POST',
+
+        headers: {
+          'Content-Type':
+            'application/json'
+        },
+
+        body: JSON.stringify({
+          name: name,
+          email: email,
+          password: password,
+          role: 'student',
+          semester: semester,
+          branch: branch
+        })
+      }
+    );
+
+
+    const data =
+      await response.json();
+
+
+    if (!response.ok) {
+
+      throw new Error(
+        data.detail ||
+        'Registration failed.'
+      );
+    }
+
+
+    $('authMessage').textContent =
+      '✓ ACCOUNT CREATED // LOGIN NOW';
+
+    $('authMessage').style.color =
+      'var(--green)';
+
+
+    $('loginEmail').value =
+      email;
+
+
+    setTimeout(
+      showLoginForm,
+      1000
+    );
+
+
+  } catch (error) {
+
+    $('authMessage').textContent =
+      'ERROR // ' +
+      error.message;
+
+    $('authMessage').style.color =
+      '#ff718c';
+  }
+}
+
+
+async function loginUser() {
+
+  const email =
+    $('loginEmail').value.trim();
+
+  const password =
+    $('loginPassword').value;
+
+
+  if (!email || !password) {
+
+    $('authMessage').textContent =
+      'ERROR // EMAIL AND PASSWORD REQUIRED';
+
+    $('authMessage').style.color =
+      '#ff718c';
+
+    return;
+  }
+
+
+  try {
+
+    const response = await fetch(
+      '/login',
+      {
+        method: 'POST',
+
+        headers: {
+          'Content-Type':
+            'application/json'
+        },
+
+        body: JSON.stringify({
+          email: email,
+          password: password
+        })
+      }
+    );
+
+
+    const data =
+      await response.json();
+
+
+    if (!response.ok) {
+
+      throw new Error(
+        data.detail ||
+        'Login failed.'
+      );
+    }
+
+
+    currentUser =
+      data.user;
+
+
+    $('authMessage').textContent =
+      '✓ LOGIN SUCCESSFUL // ACCESS GRANTED';
+
+    $('authMessage').style.color =
+      'var(--green)';
+
+
+    setTimeout(
+      function() {
+
+        closeAuthModal();
+
+        toast(
+          'WELCOME // ' +
+          currentUser.name
+        );
+
+      },
+      700
+    );
+
+
+  } catch (error) {
+
+    $('authMessage').textContent =
+      'ACCESS DENIED // ' +
+      error.message;
+
+    $('authMessage').style.color =
+      '#ff718c';
+  }
+}
+function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500)}
+function showSection(id){document.querySelectorAll('.section').forEach(s=>s.classList.toggle('active',s.id===id));document.querySelectorAll('#mainNav button').forEach(b=>b.classList.toggle('active',b.dataset.section===id));window.scrollTo({top:0,behavior:'smooth'});if(id==='dashboard')loadDashboard();if(id==='feed')loadKnowledgeFeed()}
+async function getJson(url,opts={}){const r=await fetch(url,opts);if(!r.ok)throw new Error('HTTP '+r.status);return r.json()}
+function getKnowledgeArray(data){if(Array.isArray(data))return data;if(data&&Array.isArray(data.knowledge))return data.knowledge;if(data&&Array.isArray(data.items))return data.items;return []}
+async function loadDashboard(){
+  try{
+    const data=await getJson('/dashboard?t='+Date.now());
+    $('totalKnowledge').textContent=data.total_knowledge||0;$('totalSubjects').textContent=data.total_subjects||0;$('totalTopics').textContent=data.total_topics||0;$('totalHelpful').textContent=data.total_helpful||0;$('totalNotHelpful').textContent=data.total_not_helpful||0;
+    renderSubjectStats(data.subjects||[]);renderCategoryStats(data.categories||[]);renderTopicPreview(data.topics||[]);
+  }catch(e){console.error(e);toast('Dashboard sync failed')}
+  try{const data=await getJson('/knowledge?t='+Date.now());knowledgeCache=getKnowledgeArray(data)}catch(e){console.error(e)}
+}
+function renderSubjectStats(items){const c=$('subjectsList');c.innerHTML='';items.forEach(x=>{const name=x.subject||'';const d=document.createElement('div');d.className='subject-card';d.innerHTML='<div><strong>'+escapeHtml(name)+'</strong><div class="count">'+(x.count||0)+' knowledge entries</div></div><span class="mini-action">EXPLORE →</span>';d.onclick=()=>openFilteredModal('subject',name);c.appendChild(d)})}
+function renderCategoryStats(items){const c=$('categoriesList');c.innerHTML='';items.forEach(x=>{const name=x.category||'';const d=document.createElement('div');d.className='category-card';d.innerHTML='<strong>◈ '+escapeHtml(name)+'</strong><span class="mini-action">FILTER →</span>';d.onclick=()=>openFilteredModal('category',name);c.appendChild(d)})}
+function renderTopicPreview(items){const c=$('topicPreview');c.innerHTML='';items.slice(0,10).forEach(x=>{const t=document.createElement('span');t.className='tag clickable';t.textContent=x.topic||'';t.onclick=()=>openFilteredModal('topic',x.topic||'');c.appendChild(t)});if(items.length>10){const more=document.createElement('span');more.className='tag';more.textContent='+'+(items.length-10)+' more';c.appendChild(more)}}
+async function openTopicExplorer(){await loadKnowledgeCacheIfNeeded();const topics=[...new Set(knowledgeCache.map(x=>x.topic).filter(Boolean))].sort();openModal('<h2>🎯 TOPIC EXPLORER</h2><div class="modal-meta">'+topics.length+' INDEXED TOPICS</div><input id="topicExplorerSearch" placeholder="filter topics..."><div id="topicExplorerList" class="tag-container" style="margin-top:13px"></div>');const render=()=>{const q=($('topicExplorerSearch').value||'').toLowerCase();$('topicExplorerList').innerHTML=topics.filter(t=>t.toLowerCase().includes(q)).slice(0,180).map(t=>'<button class="junior-tag" onclick="openFilteredModal(\'topic\',\''+String(t).replace(/\\/g,'\\\\').replace(/'/g,"\\'")+'\')">'+escapeHtml(t)+'</button>').join('')};$('topicExplorerSearch').oninput=render;render()}
+async function loadKnowledgeCacheIfNeeded(){if(knowledgeCache.length)return;knowledgeCache=getKnowledgeArray(await getJson('/knowledge?t='+Date.now()))}
+async function openFilteredModal(field,value){await loadKnowledgeCacheIfNeeded();const items=knowledgeCache.filter(x=>String(x[field]||'').toLowerCase()===String(value).toLowerCase());openModal('<h2>'+escapeHtml(value)+'</h2><div class="modal-meta">'+items.length+' MATCHING RECORDS</div>'+items.map(x=>'<div class="result-card" style="margin-bottom:10px" onclick=\'showKnowledgeDetails('+JSON.stringify(x).replace(/'/g,'&#039;')+')\'><h3>'+escapeHtml(x.title||'Untitled')+'</h3><div class="knowledge-meta">'+escapeHtml(x.subject||'')+' • '+escapeHtml(x.topic||'')+'</div><div class="knowledge-content">'+escapeHtml(x.content||'')+'</div></div>').join(''))}
+function showKnowledgeDetails(item){openModal('<h2>'+escapeHtml(item.title||'Untitled')+'</h2><div class="modal-meta">'+escapeHtml(item.subject||'')+' • '+escapeHtml(item.topic||'')+' • '+escapeHtml(item.category||'')+'</div><div class="modal-content">'+escapeHtml(item.content||'')+'</div><div class="feedback-area"><div class="feedback-title">Was this knowledge helpful?</div><div class="feedback-buttons"><button class="feedback-btn" onclick="sendFeedback('+Number(item.id)+',\'helpful\')">👍 Helpful</button><button class="feedback-btn" onclick="sendFeedback('+Number(item.id)+',\'not_helpful\')">👎 Not Helpful</button></div></div>')}
+function openModal(html){$('modalContent').innerHTML=html;$('modal').classList.add('show')}
+function closeModal(){$('modal').classList.remove('show')}
+window.addEventListener('click',e=>{if(e.target===$('modal'))closeModal()})
+async function loadKnowledgeFeed(){try{await loadKnowledgeCacheIfNeeded();const feed=$('knowledgeFeed');feed.innerHTML=knowledgeCache.map(item=>'<div class="knowledge-card" onclick=\'showKnowledgeDetails('+JSON.stringify(item).replace(/'/g,'&#039;')+')\'><h3>'+escapeHtml(item.title||'Untitled')+'</h3><div class="knowledge-meta">'+escapeHtml(item.subject||'')+' • '+escapeHtml(item.topic||'')+'</div><div class="knowledge-content">'+escapeHtml(item.content||'')+'</div><div class="tag-container" style="margin-top:12px"><span class="tag">'+escapeHtml(item.category||'Knowledge')+'</span><span class="tag">'+escapeHtml(item.difficulty||'Medium')+'</span></div></div>').join('')}catch(e){console.error(e);$('knowledgeFeed').innerHTML='<div class="knowledge-card"><h3>Could not load knowledge.</h3></div>'}}
+async function searchKnowledge(){const q=$('searchInput').value.trim();if(!q)return;const r=$('searchResults');r.innerHTML='<div class="knowledge-card">SEARCHING...</div>';try{const data=await getJson('/search?q='+encodeURIComponent(q)+'&t='+Date.now());const items=getKnowledgeArray(data);r.innerHTML=items.length?items.map(item=>'<div class="result-card" onclick=\'showKnowledgeDetails('+JSON.stringify(item).replace(/'/g,'&#039;')+')\'><h3>'+escapeHtml(item.title||'Untitled')+'</h3><div class="knowledge-meta">'+escapeHtml(item.subject||'')+' • '+escapeHtml(item.topic||'')+'</div><div class="knowledge-content">'+escapeHtml(item.content||'')+'</div></div>').join(''):'<div class="knowledge-card"><h3>NO MATCHES</h3><p style="color:var(--muted);font-size:11px">Try another keyword.</p></div>'}catch(e){console.error(e);r.innerHTML='<div class="knowledge-card"><h3>SEARCH ERROR</h3></div>'}}
+async function askEchoMind(){const q=$('question').value.trim();if(!q)return;const b=$('askButton'),area=$('answerArea');b.disabled=true;b.textContent='PROCESSING...';area.innerHTML='<div class="answer-card"><h2>⟳ QUERY PROCESSING</h2><div class="answer-content"><p>Searching college knowledge...</p></div></div>';try{const data=await getJson('/ask',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question:q})});let html='<div class="answer-card"><h2>🤖 ECHOMIND RESPONSE</h2><div class="answer-content">'+formatAnswer(data.answer||'No answer returned.')+'</div>';const sources=Array.isArray(data.sources)?data.sources:[];if(sources.length){html+='<div class="sources"><div class="sources-title">📚 COLLEGE SOURCES</div>'+sources.map(s=>'<div class="source-card"><strong>'+escapeHtml(s.title||'College Knowledge')+'</strong><small>'+escapeHtml((s.subject||'College')+' • '+(s.topic||'Knowledge'))+'</small><small>'+escapeHtml(s.category||'Concept Explanation')+'</small></div>').join('')+'</div>';html+='<div class="feedback-area"><div class="feedback-title">Was this answer helpful?</div><div class="feedback-buttons"><button class="feedback-btn" onclick="sendFeedback('+Number(sources[0].id)+',\'helpful\')">👍 Helpful</button><button class="feedback-btn" onclick="sendFeedback('+Number(sources[0].id)+',\'not_helpful\')">👎 Not Helpful</button></div></div>'}html+='</div>';area.innerHTML=html}catch(e){console.error(e);area.innerHTML='<div class="answer-card"><h2>ERROR</h2><div class="answer-content"><p>EchoMind could not process the request.</p></div></div>'}finally{b.disabled=false;b.textContent='EXECUTE QUERY ↵'}}
+async function sendFeedback(id,type){try{const r=await fetch('/knowledge/'+encodeURIComponent(id)+'/'+encodeURIComponent(type),{method:'POST'});if(!r.ok)throw new Error('Feedback failed');toast(type==='helpful'?'FEEDBACK +1 // POSITIVE':'FEEDBACK +1 // REVIEW QUEUE');await loadDashboard();}catch(e){console.error(e);toast('Feedback could not be saved')}}
+async function shareKnowledge(){const payload={title:$('shareTitle').value.trim(),content:$('shareContent').value.trim(),subject:$('shareSubject').value,unit:$('shareUnit').value,topic:$('shareTopic').value.trim(),category:$('shareCategory').value,difficulty:$('shareDifficulty').value,keywords:$('shareKeywords').value.trim(),author:$('shareAuthor').value.trim()};if(!payload.title||!payload.content||!payload.author){toast('TITLE / CONTENT / AUTHOR REQUIRED');return}try{const r=await fetch('/knowledge',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});const data=await r.json();if(!r.ok)throw new Error(data.detail||'Upload failed');toast('KNOWLEDGE UPLOADED // INDEXING COMPLETE');document.querySelectorAll('#share input,#share textarea').forEach(x=>x.value='');document.querySelectorAll('#share select').forEach(x=>x.value='');await loadDashboard();}catch(e){console.error(e);toast(e.message)}}
+document.querySelectorAll('.junior-tag').forEach(
+    btn => btn.addEventListener(
+        'click',
+        () => openFilteredModal(
+            'subject',
+            btn.dataset.subject
+        )
+    )
+);
+
+
+async function restoreLogin() {
+
+    try {
+
+        const data = await getJson('/me');
+
+        if (data.logged_in && data.user) {
+
+            currentUser = data.user;
+
+            toast(
+                'SESSION RESTORED // ' +
+                currentUser.name
+            );
+        }
+
+    } catch (error) {
+
+        currentUser = null;
+    }
+}
+
+
+restoreLogin();
+
+showSection('dashboard');
+</script>
+</body>
+</html>
